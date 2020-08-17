@@ -1,0 +1,3 @@
+[submodule "MSDS_6306_Doing-Data-Science"]
+	path = MSDS_6306_Doing-Data-Science
+	url = https://github.com/BivinSadler/MSDS_6306_Doing-Data-Science.git
