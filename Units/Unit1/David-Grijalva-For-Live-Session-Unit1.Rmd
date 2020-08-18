@@ -92,7 +92,7 @@ sd(xbars)
 conduct a six step hypothesis test
 
 Data: 25, 19, 37, 29, 40, 28, 31
-Claim: The age of patros is different than 21 years.
+Claim: The age of patrons is different than 21 years.
 Alpha=0.05
 
 ```{R}
@@ -124,7 +124,7 @@ shadeDist( c(- 2.447, 2.447), "dt", 6, main = "T Distribution Critical Value" )
 t.test(ages, mu=21, conf.level=0.05)
 ```
 *Step 5*  
-The P-value is less thatn 0.05, hence we reject the null hypothesis
+The P-value is less than 0.05, hence we reject the null hypothesis
 
 *Step 6*  
 Conclusion:  There is enough evidence that suggests that the mean age of patrons is different from 21 years old (P-value: 0.01622).
