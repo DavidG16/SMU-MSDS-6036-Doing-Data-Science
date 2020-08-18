@@ -1,0 +1,130 @@
+---
+title: "David-Grijalva-For-Live-Session-Unit-1"
+author: "David Grijalva"
+date: "8/18/2020"
+output: html_document
+---
+
+# For Live Session Unit 1 
+Here is the working R code for the live session assignment for unit 1.  
+The code is split into 3 sections:  
+1) Data Science Profile  
+2) Central Limit Theorem   
+3) T-test  
+
+
+### Data Science Profile
+ Make a bar plot for your data science profile
+
+```{r}
+# Create arrays with subjscts and skill levels
+values = c(38, 60, 40, 45, 70, 55, 70)
+area = c("Data\nViz", "Machine\nLearning", "Mathematics", "Statistics",
+          "Computer\nScience", "Communication", "Domain\nExpertise")
+
+dfp = data.frame(Area = area, Values = values)
+
+# Build Barchart
+barplot(dfp$Values, names.arg = dfp$Area, col="blue", ylab="Skill Level",
+        xlab ="Subject", main="Data Science Profile", space=0.5, cex.names=0.70,
+        ylim=c(0,100))
+
+```
+
+
+### CLT
+1 - Generate a population of 10,000,000 from a chi-square distribution with 2 degrees of freedom.  
+2 - Provide a histogram of this population… display the right skewness.  
+3 - Record the mean and standard deviation of this population.  
+4 - What should be the mean and standard error of the mean (standard deviation of the distribution of sample means)?  
+5- Adapt the CLT code to draw 10,000 means each of size 50 from this population and provide the sampling distribution of this sample mean.   
+6 -Provide a histogram of these 10,000 sample means  
+7- What is the mean and standard deviation of these 10,000 sample means?   
+
+
+```{R}
+# Generate chi-square population
+population = rchisq(10000000, 2)
+hist(population, main = "Chi-squared Population (df=2)", xlab="Population", col="blue")
+# Population Mean
+mean(population)
+# Population Standard Deviation
+sd(population)
+```
+
+####   What is the expected sample mean and standard deviation?
+According to the CLT we expect that the sample means approximates to the one of the population and that the
+standard deviation, given a large enough sample will be smaller that the one from the original distribution.     
+The expected mean is 2.  
+The expected standard deviation is less than 2. I believe the number of samples should be large enough.  
+
+```{r}
+#####################################################
+# Funciton: xbarGenerator
+# Argements: samplesize: the size of the sample that each sample mean is based on. 
+#            number_of_samples: the number of samples and thus sample means we will generate
+# Author: David Grijalva
+#####################################################
+xbarGenerator = function(sampleSize = 50,number_of_samples = 10000)
+{
+  for(i in 1:number_of_samples)
+  {
+    theSample = sample(population,sampleSize)
+    xbar = mean(theSample)
+    xBarVec = c(xBarVec, xbar)
+  }
+  return(xBarVec)
+}
+
+# Run function
+xBarVec = c() 
+xbars = xbarGenerator(50,10000)
+length(xbars)
+hist(xbars, col="Blue", main="Distribution of sample means")
+# xbars Mean
+mean(xbars)
+# xbars Standard Deviation
+sd(xbars)
+```
+
+
+### T-test
+conduct a six step hypothesis test
+
+Data: 25, 19, 37, 29, 40, 28, 31
+Claim: The age of patros is different than 21 years.
+Alpha=0.05
+
+```{R}
+# Data
+ages = c(25,19,37,29,40,28,31)
+hist(ages, main="Distribution of Age", col="Blue", xlab="Age")
+# Sample mean
+mean(ages)
+# Sample standard deviation
+sd(ages)
+```
+*Step 1:*  
+This is a one sample two sides t-test.  
+h0 = 21  
+h1 != 21  
+
+*Step 2*    
+df = 6  
+Critical value = 2.447  
+```{R}
+library(fastGraph)
+
+shadeDist( c(- 2.447, 2.447), "dt", 6, main = "T Distribution Critical Value" )
+
+```
+
+*Step 3,4*  
+```{R}
+t.test(ages, mu=21, conf.level=0.05)
+```
+*Step 5*  
+The P-value is less thatn 0.05, hence we reject the null hypothesis
+
+*Step 6*  
+Conclusion:  There is enough evidence that suggests that the mean age of patrons is different from 21 years old (P-value: 0.01622).
