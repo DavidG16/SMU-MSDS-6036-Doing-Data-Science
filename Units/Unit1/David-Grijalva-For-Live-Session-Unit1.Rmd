@@ -121,7 +121,7 @@ shadeDist( c(- 2.447, 2.447), "dt", 6, main = "T Distribution Critical Value" )
 
 *Step 3,4*  
 ```{R}
-t.test(ages, mu=21, conf.level=0.05)
+t.test(ages, mu=21, conf.level=0.95)
 ```
 *Step 5*  
 The P-value is less than 0.05, hence we reject the null hypothesis
